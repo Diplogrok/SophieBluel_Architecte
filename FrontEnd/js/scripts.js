@@ -5,11 +5,19 @@ console.log(container);
 
 const getArticles = () => {
   fetch(url)
-    .then(function (resizeTo) {
-      return resizeTo.json();
+    .then(function (response) {
+      return response.json();
     })
     .then(function (data) {
       console.log(data);
+
+      for (work in data) {
+        container.innerHTML += `
+        <figure>
+        <img src="${data[work].imageUrl} "${data[work].title}">
+        <figcaption>${data[work].title}</figcaption>
+    </figure>`;
+      }
     });
 };
 
