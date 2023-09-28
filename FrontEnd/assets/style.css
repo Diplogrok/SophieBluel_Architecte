@@ -184,7 +184,7 @@ img.social {
   width: 22px;
 }
 li:hover {
-	color: #b1663c;
+  color: #b1663c;
 }
 #introduction {
   display: flex;
@@ -215,6 +215,29 @@ li:hover {
   text-align: center;
   margin-bottom: 1em;
 }
+.filter {
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  padding-bottom: 60px;
+}
+.filter button {
+  cursor: pointer;
+  font-family: "Syne";
+  border: #1d6154 solid 1px;
+  border-radius: 60px;
+  padding: 9px;
+  margin-left: 10px;
+}
+.button {
+  color: #1d6154;
+  background-color: #fffef8;
+}
+.active {
+  color: white;
+  background-color: #1d6154;
+}
+
 .gallery {
   width: 100%;
   display: grid;

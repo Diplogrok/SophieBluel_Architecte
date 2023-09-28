@@ -1,24 +1,48 @@
-const url = "http://localhost:5678/api/works";
-console.log(url);
 const container = document.getElementById("gallery");
-console.log(container);
+const filterButtons = document.getElementById("filter").children;
+const url = "http://localhost:5678/api/works";
 
-const getArticles = () => {
+const getWorks = () => {
   fetch(url)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
+      console.table(data);
 
       for (work in data) {
         container.innerHTML += `
         <figure>
-        <img src="${data[work].imageUrl} "${data[work].title}">
+        <img src="${data[work].imageUrl}">
         <figcaption>${data[work].title}</figcaption>
-    </figure>`;
+        </figure>`;
       }
+
+      filterButtons[0].addEventListener("click", function () {
+        console.log("Tous");
+
+        /*let All = fetch(url).categoryId.filter(function (value) {
+          if ((value === 1, 2, 3)) {
+            return true;
+          }
+        });*/
+      });
+
+      filterButtons[1].addEventListener("click", function () {
+        console.log("Objets");
+
+        let objects = url.filter((category) => category.categoryId === 1);
+        objects.forEach((category) => console.log(category.title));
+      });
+
+      filterButtons[2].addEventListener("click", function () {
+        console.log("Appartements");
+      });
+
+      filterButtons[3].addEventListener("click", function () {
+        console.log("Hôtel & restaurants");
+      });
     });
 };
 
-getArticles();
+getWorks();
