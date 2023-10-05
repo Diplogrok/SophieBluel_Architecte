@@ -1,6 +1,7 @@
 const apiWork = "http://localhost:5678/api/works";
+const apiCategory = "http://localhost:5678/api/categories";
 const container = document.getElementById("gallery");
-const filterButtons = document.getElementById("filter").children;
+let dataSaved = [];
 
 const getWorks = async () => {
   await fetch(apiWork)
@@ -8,7 +9,7 @@ const getWorks = async () => {
       return response.json();
     })
     .then(function (data) {
-      console.table(data);
+      dataSaved = data;
 
       for (work in data) {
         container.innerHTML += `
@@ -22,24 +23,31 @@ const getWorks = async () => {
 
 getWorks();
 
-const apiCategory = "http://localhost:5678/api/categories";
+let filterOne = "Tous";
+let filterTwo = "Objets";
+let filterThree = "Appartements";
+let filterFour = "Hôtels & restaurants";
 
-//array.prototype.filter()//
+let filter = `
+<button class="active">${filterOne}</button>
+<button class="button">${filterTwo}</button>
+<button class="button">${filterThree}</button>
+<button class="button">${filterFour}</button>
+`;
+
+let allFilter = document.getElementById("filter");
+allFilter.innerHTML = filter;
+
+/*
 
 filterButtons[0].addEventListener("click", function () {
   console.log("Tous");
-
-  /*let All = fetch(url).categoryId.filter(function (value) {
-          if ((value === 1, 2, 3)) {
-            return true;
-          }
-        });*/
 });
 
 filterButtons[1].addEventListener("click", function () {
-  console.log("Objets");
-
-  let objects = url.filter((category) => category.categoryId === 1);
+  let objects = dataSaved.filter(
+    (category) => category.category.name === "Objets"
+  );
   objects.forEach((category) => console.log(category.title));
 });
 
@@ -49,4 +57,4 @@ filterButtons[2].addEventListener("click", function () {
 
 filterButtons[3].addEventListener("click", function () {
   console.log("Hôtel & restaurants");
-});
+});*/
