@@ -3,13 +3,14 @@ const apiCategory = "http://localhost:5678/api/categories";
 const container = document.getElementById("gallery");
 let dataSaved = [];
 
-const getWorks = async () => {
+const getWork = async () => {
   await fetch(apiWork)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
       dataSaved = data;
+      console.log(data);
 
       for (work in data) {
         container.innerHTML += `
@@ -21,40 +22,37 @@ const getWorks = async () => {
     });
 };
 
-getWorks();
+getWork();
 
 let filterOne = "Tous";
-let filterTwo = "Objets";
-let filterThree = "Appartements";
-let filterFour = "Hôtels & restaurants";
-
 let filter = `
 <button class="active">${filterOne}</button>
-<button class="button">${filterTwo}</button>
-<button class="button">${filterThree}</button>
-<button class="button">${filterFour}</button>
 `;
-
 let allFilter = document.getElementById("filter");
 allFilter.innerHTML = filter;
 
-/*
+const getCategory = async () => {
+  await fetch(apiCategory)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      dataSaved = data;
+      console.log(data);
 
-filterButtons[0].addEventListener("click", function () {
-  console.log("Tous");
-});
+      for (category in data) {
+        allFilter.innerHTML += `
+        <button class="button">${data[category].name}</button>
+        `;
+      }
+    });
+};
 
-filterButtons[1].addEventListener("click", function () {
+getCategory();
+
+/* filterButtons[1].addEventListener("click", function () {
   let objects = dataSaved.filter(
     (category) => category.category.name === "Objets"
   );
   objects.forEach((category) => console.log(category.title));
-});
-
-filterButtons[2].addEventListener("click", function () {
-  console.log("Appartements");
-});
-
-filterButtons[3].addEventListener("click", function () {
-  console.log("Hôtel & restaurants");
-});*/
+}); */
