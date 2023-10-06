@@ -301,3 +301,19 @@ li.mentions {
   cursor: pointer;
   padding-right: 107px;
 }
+
+.connexion {
+  padding-top: 150px;
+}
+.connexion_form {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+.connexion_form-input {
+  width: 379px;
+}
+.connexion_mdp {
+  padding-bottom: 200px;
+  text-decoration: underline;
+}

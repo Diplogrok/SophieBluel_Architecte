@@ -12,7 +12,6 @@ const getWork = async () => {
     })
     .then(function (data) {
       dataSaved = data;
-      console.log(data);
 
       for (work in data) {
         container.innerHTML += `
@@ -39,7 +38,6 @@ const getCategory = async () => {
     })
     .then(function (data) {
       dataSaved = data;
-      console.log(data);
 
       for (category in data) {
         buttonFilter.innerHTML += `
@@ -51,6 +49,8 @@ const getCategory = async () => {
       } 
     });
 };
+
+getCategory();
 
 
 /*
@@ -86,4 +86,4 @@ function nextCat() {
   objects.forEach((category) => console.log(category.title));
 }); */
 
-getCategory();
+
