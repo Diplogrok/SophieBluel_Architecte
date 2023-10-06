@@ -221,18 +221,17 @@ li:hover {
   padding-top: 30px;
   padding-bottom: 60px;
 }
-.filter button {
+button {
   cursor: pointer;
   font-family: "Syne";
   border: #1d6154 solid 1px;
   border-radius: 60px;
   padding: 9px;
   margin-left: 10px;
-}
-.button {
   color: #1d6154;
   background-color: #fffef8;
 }
+
 .active {
   color: white;
   background-color: #1d6154;
