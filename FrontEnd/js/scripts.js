@@ -3,7 +3,9 @@ const apiCategory = "http://localhost:5678/api/categories";
 const container = document.getElementById("gallery");
 let dataSaved = [];
 const buttonFilter = document.getElementById("filter");
-console.log(buttonFilter);
+const buttonFilterChildren = buttonFilter.children;
+console.log(buttonFilterChildren);
+
 
 const getWork = async () => {
   await fetch(apiWork)
@@ -28,7 +30,7 @@ getWork();
 
 let buttonOne = "Tous";
 let all = `
-<button class="active" id="filter">${buttonOne}</button>
+<button class="active">${buttonOne}</button>
 `;
 buttonFilter.innerHTML = all;
 
@@ -43,15 +45,17 @@ const getCategory = async () => {
 
       for (category in data) {
         buttonFilter.innerHTML += `
-        <button id="filter">${data[category].name}</button>
+        <button>${data[category].name}</button>
         `;
+      }
+
+      for (let i = 0; i < buttonFilterChildren.length; i++) {
+        console.log(buttonFilterChildren[i]);
       }
     });
 };
 
 getCategory();
-
-
 
 /* filterButtons[1].addEventListener("click", function () {
   let objects = dataSaved.filter(
