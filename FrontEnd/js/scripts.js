@@ -4,6 +4,7 @@ const container = document.getElementById("gallery");
 const buttonFilter = document.getElementById("filter");
 const buttonFilterChildren = buttonFilter.children;
 let dataSaved = [];
+let dataSavedC = [];
 
 const getWork = async () => {
   await fetch(apiWork)
@@ -25,9 +26,8 @@ const getWork = async () => {
 
 getWork();
 
-let buttonOne = "Tous";
 let all = `
-<button class="active">${buttonOne}</button>
+<button class="active">Tous</button>
 `;
 buttonFilter.innerHTML = all;
 
@@ -37,21 +37,38 @@ const getCategory = async () => {
       return response.json();
     })
     .then(function (data) {
-      dataSaved = data;
+      dataSavedC = data;
 
       for (category in data) {
         buttonFilter.innerHTML += `
         <button>${data[category].name}</button>
         `;
       }
-      for (let i = 0; i < buttonFilterChildren.length; i++) {
-        console.log(buttonFilterChildren[i]);
-      } 
     });
+  buttonFilterChildren[0].addEventListener("click", function () {
+    let objects = dataSaved.filter((category) => category.categoryId <= 3);
+
+    objects.forEach((category) => console.log(category.title));
+  });
+
+  buttonFilterChildren[1].addEventListener("click", function () {
+    let objects = dataSaved.filter((category) => category.categoryId === 1);
+
+    objects.forEach((category) => console.log(category.title));
+  });
+  buttonFilterChildren[2].addEventListener("click", function () {
+    let objects = dataSaved.filter((category) => category.categoryId === 2);
+
+    objects.forEach((category) => console.log(category.title));
+  });
+  buttonFilterChildren[3].addEventListener("click", function () {
+    let objects = dataSaved.filter((category) => category.categoryId === 3);
+
+    objects.forEach((category) => console.log(category.title));
+  });
 };
 
 getCategory();
-
 
 /*
 buttonFilterChildren.forEach((color) => {
@@ -85,5 +102,3 @@ function nextCat() {
   );
   objects.forEach((category) => console.log(category.title));
 }); */
-
-
