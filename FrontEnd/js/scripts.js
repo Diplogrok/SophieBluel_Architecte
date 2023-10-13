@@ -24,9 +24,9 @@ const buttonFilterChildren = buttonFilter.children;
     buttonFilter.innerHTML += `
         <button>${category[j].name}</button>
         `;
-
-    getWork(work);
   }
+  getWork(work);
+
   for (let k = 0; k < buttonFilterChildren.length; k++) {
     buttonFilterChildren[k].addEventListener("click", function () {
       for (let l = 0; l < buttonFilterChildren.length; l++) {
