@@ -190,7 +190,8 @@ nav li {
 img.social {
   width: 22px;
 }
-li:hover {
+li:hover,
+a:hover {
   color: #b1663c;
 }
 #introduction {

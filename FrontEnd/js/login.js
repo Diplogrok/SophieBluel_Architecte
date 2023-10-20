@@ -5,3 +5,4 @@ function login() {
     body: '{"email":"string", "password":"string"}',
   });
 }
+login();
