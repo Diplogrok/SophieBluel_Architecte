@@ -319,7 +319,8 @@ li.mentions {
   align-self: center;
 }
 .connexion_form-input {
-  width: 379px;
+  width: 359px;
+  padding-left: 20px;
 }
 .connexion_mdp {
   padding-bottom: 200px;
