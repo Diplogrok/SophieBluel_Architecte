@@ -1,5 +1,6 @@
+/*
 (async () => {
-  console.log(fetch("http://localhost:5678/api/users/login"));
+  console.log(await fetch("http://localhost:5678/api/users/login"));
 })();
 
 /* const form = document.getElementById("form");
@@ -19,8 +20,7 @@ form.addEventListener("submit", function (e) {
 });
 
 
-
-async () => {
+(async () => {
   function login() {
     const form = document.getElementById("form");
     form.addEventListener("submit", (e) => {
@@ -39,10 +39,54 @@ async () => {
     }),
     headers: { "Content-Type": "application/json" },
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    });
+    
 
   login();
-};*/
+})();
+
+const form = document.getElementById("form");
+//window.localStorage.setItem(`${}`,JSON.stringify())//
+
+form.addEventListener("submit", function () {
+  async () => {
+    fetch("http://localhost:5678/api/users/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email: "sophie.bluel@test.tld",
+        pass: "S0phie",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        if (resp.ok) {
+          console.log("HTTP request successful");
+        } else {
+          console.log("HTTP request successful");
+        }
+        return resp;
+      })
+      .then((resp) => resp.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error))();
+  };
+});*/
+
+const form = document.getElementById("form");
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
+  fetch("http://localhost:5678/api/users/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((data) => console.log(data))
+    .catch((error) => console.log(error));
+});
