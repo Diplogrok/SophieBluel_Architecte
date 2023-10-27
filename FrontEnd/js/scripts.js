@@ -51,11 +51,9 @@ const buttonFilterChildren = buttonFilter.children;
         buttonFilterChildren[l].classList.remove("active");
       }
       this.classList.add("active");
-    });
-    /**
-     * Affichage des travaux filtrer par catégories au click
-     */
-    buttonFilterChildren[k].addEventListener("click", function () {
+      /**
+       * Affichage des travaux filtrer par catégories au click
+       */
       const catFiltered = work.filter(function (filter) {
         return filter.categoryId === k;
       });
