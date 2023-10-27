@@ -73,6 +73,7 @@ form.addEventListener("submit", function () {
   };
 });
 
+
 function errorMessage(message) {
   let spanErrorMessage = document.getElementById("error");
 
