@@ -338,7 +338,7 @@ li.mentions {
   height: 100%;
 }
 
-.modal_wrapper {
+.modal-wrapper {
   overflow: auto;
   width: 630px;
   height: 680px;
