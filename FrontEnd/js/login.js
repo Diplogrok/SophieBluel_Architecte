@@ -1,3 +1,32 @@
+const form = document.getElementById("form");
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
+  fetch("http://localhost:5678/api/users/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((resp) => {
+      if (resp.ok) {
+        console.log("HTTP request successful");
+        window.location.href = "index.html";
+      } else {
+        console.log("HTTP request unsuccessful");
+        alert("email et/ou mot de pass incorrect");
+      }
+      return resp;
+    })
+
+    .then((res) => res.json())
+    .then((data) => console.log(data))
+    .catch((error) => console.log(error));
+});
+
 /*
 (async () => {
   console.log(await fetch("http://localhost:5678/api/users/login"));
@@ -86,32 +115,3 @@ function errorMessage(message) {
   }
   spanErrorMessage.innerText = message;
 }*/
-
-const form = document.getElementById("form");
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const formData = new FormData(form);
-  const data = Object.fromEntries(formData);
-  fetch("http://localhost:5678/api/users/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((resp) => {
-      if (resp.ok) {
-        console.log("HTTP request successful");
-        window.location.href = "index.html";
-      } else {
-        console.log("HTTP request unsuccessful");
-        alert("email et/ou mot de pass incorrect");
-      }
-      return resp;
-    })
-
-    .then((res) => res.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.log(error));
-});
