@@ -46,7 +46,7 @@ const buttonFilterChildren = buttonFilter.children;
     buttonFilterChildren[k].addEventListener("click", function () {
       for (let l = 0; l < buttonFilterChildren.length; l++) {
         /**
-         * Changement de du backround-color au click
+         * Changement du backround-color au click
          */
         buttonFilterChildren[l].classList.remove("active");
       }
