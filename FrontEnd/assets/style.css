@@ -194,6 +194,10 @@ li:hover,
 a:hover {
   color: #b1663c;
 }
+
+.hidden {
+  display: none;
+}
 #introduction {
   display: flex;
   align-items: center;

@@ -16,26 +16,26 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const formData = new FormData(form);
-  const data = Object.fromEntries(formData);
+  const dataForm = Object.fromEntries(formData);
   fetch("http://localhost:5678/api/users/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(dataForm),
   })
     .then((resp) => {
-      if (resp.ok) {
-        console.log("HTTP request successful");
+      return resp.json();
+    })
+    .then((data) => {
+      sessionStorage.setItem("token", data.token);
+      const token = data.token;
+      if (token) {
         window.location.href = "index.html";
       } else {
-        console.log("HTTP request unsuccessful");
         throw new Error("Email et/ou mot de passe incorrect");
       }
-      return resp;
+      return;
     })
-
-    .then((res) => res.json())
-    .then((data) => console.log(data))
     .catch((error) => errorMessage(error.message));
 });
