@@ -133,6 +133,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
 /** end reset css**/
 
 body {
@@ -343,11 +344,57 @@ li.mentions {
 }
 
 .modal-wrapper {
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   width: 630px;
   height: 680px;
   padding: 20px;
   background-color: white;
+  border-radius: 10px;
+}
+#title-modal {
+  font-size: 26px;
+  text-align: center;
+}
+.fa-xmark {
+  font-size: 24px;
+  color: black;
+}
+.js-modal-close {
+  border: none;
+  background-color: white;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+}
+.line-decoration {
+  width: 420px;
+  border: 1px solid #1d6154;
+  margin-bottom: 48px;
+  margin-top: 67px;
+  margin-left: 105px;
+}
+.input-modal {
+  font-size: 14px;
+  color: white;
+  padding: 10px 49px;
+  width: 237px;
+  margin-left: 196px;
+  background-color: #1d6154;
+}
+.input-modal:active {
+  background-color: #fffef8;
+  color: #1d6154;
+}
+.modal-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 106px;
+  margin-right: 106px;
+}
+.modal-figure {
+  padding: 9.5px 3px;
 }
 
 #error {

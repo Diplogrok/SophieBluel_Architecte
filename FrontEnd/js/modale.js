@@ -1,23 +1,31 @@
-
-
-
-
-
 let modal = null;
 
 const openModal = function (e) {
   e.preventDefault();
-  const target = document.querySelector(e.target.getAttribute("href"));
-  target.style.display = null;
-  target.removeAttribute("aria-hidden");
-  target.setAttribute("aria-modal", true);
-  modal = target;
+  modal = document.querySelector(e.target.getAttribute("href"));
+
+  modal.style.display = null;
+  modal.removeAttribute("aria-hidden");
+  modal.setAttribute("aria-modal", true);
   modal.addEventListener("click", closeModal);
   modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
   modal
     .querySelector(".js-modal-stop")
     .addEventListener("click", stopPropagation);
 };
+const container = document.querySelector(".modal-gallery");
+const answerW = await fetch("http://localhost:5678/api/works");
+const work = await answerW.json();
+function getWork(work) {
+  for (let i = 0; i < work.length; i++) {
+    container.innerHTML += `
+        <figure class ="modal-figure">
+        <img src="${work[i].imageUrl}" width="78px">
+        </figure>`;
+  }
+}
+getWork(work);
+
 const closeModal = function (e) {
   if (modal === null) return;
   e.preventDefault();
@@ -47,3 +55,13 @@ window.addEventListener("keydown", function (e) {
     closeModal(e);
   }
 });
+
+export function enableEditMode() {
+  const editMode = document.getElementById("js-modal");
+  const logout = document.getElementById("login");
+  const login = document.getElementById("logout");
+  logout.classList.add("hidden");
+  login.classList.remove("hidden");
+  editMode.classList.remove("hidden");
+}
+enableEditMode();
