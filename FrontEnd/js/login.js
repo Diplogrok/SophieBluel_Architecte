@@ -1,3 +1,6 @@
+/*import { enableEditMode } from "./scripts";
+enableEditMode();*/
+
 function errorMessage(message) {
   let spanErrorMessage = document.getElementById("error");
 

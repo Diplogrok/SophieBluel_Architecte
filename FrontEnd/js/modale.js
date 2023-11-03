@@ -28,7 +28,6 @@ function getWork(work) {
 getWork(work);
 
 const trash = document.querySelectorAll(".fa-trash-can");
-console.log(trash);
 
 for (let i = 0; i < trash.length; i++) {
   trash[i].addEventListener("click", function () {
@@ -69,12 +68,4 @@ window.addEventListener("keydown", function (e) {
   }
 });
 
-export function enableEditMode() {
-  const editMode = document.getElementById("js-modal");
-  const logout = document.getElementById("login");
-  const login = document.getElementById("logout");
-  logout.classList.add("hidden");
-  login.classList.remove("hidden");
-  editMode.classList.remove("hidden");
-}
-enableEditMode();
+

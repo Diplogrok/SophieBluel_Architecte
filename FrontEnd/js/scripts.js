@@ -68,3 +68,15 @@ const buttonFilterChildren = buttonFilter.children;
     getWork(work);
   });
 })();
+
+export function enableEditMode() {
+  const editMode = document.getElementById("js-modal");
+  const logout = document.getElementById("login");
+  const login = document.getElementById("logout");
+  const editBand = document.getElementById("edit-band");
+  logout.classList.add("hidden");
+  login.classList.remove("hidden");
+  editMode.classList.remove("hidden");
+  editBand.classList.remove("hidden");
+}
+enableEditMode();
