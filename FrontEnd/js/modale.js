@@ -20,11 +20,24 @@ function getWork(work) {
   for (let i = 0; i < work.length; i++) {
     container.innerHTML += `
         <figure class ="modal-figure">
-        <img src="${work[i].imageUrl}" width="78px">
+        <img id="${work[i].id}"src="${work[i].imageUrl}" width="78px">
+        <i id="${work[i].id}" class="fa-solid fa-trash-can"></i>
         </figure>`;
   }
 }
 getWork(work);
+
+const trash = document.querySelectorAll(".fa-trash-can");
+console.log(trash);
+
+for (let i = 0; i < trash.length; i++) {
+  trash[i].addEventListener("click", function () {
+    console.log("click");
+    fetch("http://localhost:5678/api/works/${id}", {
+      method: "DELETE",
+    }).then((resp) => resp.json());
+  });
+}
 
 const closeModal = function (e) {
   if (modal === null) return;

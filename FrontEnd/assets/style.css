@@ -356,6 +356,7 @@ li.mentions {
 #title-modal {
   font-size: 26px;
   text-align: center;
+  padding-bottom: 46px;
 }
 .fa-xmark {
   font-size: 24px;
@@ -383,10 +384,7 @@ li.mentions {
   margin-left: 196px;
   background-color: #1d6154;
 }
-.input-modal:active {
-  background-color: #fffef8;
-  color: #1d6154;
-}
+
 .modal-gallery {
   display: flex;
   flex-wrap: wrap;
@@ -395,6 +393,18 @@ li.mentions {
 }
 .modal-figure {
   padding: 9.5px 3px;
+}
+.fa-trash-can {
+  cursor: pointer;
+  font-size: 10px;
+  color: white;
+  position: relative;
+  bottom: 90px;
+  right: 21px;
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 2px;
+  background-color: black;
 }
 
 #error {
