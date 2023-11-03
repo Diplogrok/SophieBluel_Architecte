@@ -67,5 +67,3 @@ window.addEventListener("keydown", function (e) {
     closeModal(e);
   }
 });
-
-

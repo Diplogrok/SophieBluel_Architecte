@@ -69,7 +69,7 @@ const buttonFilterChildren = buttonFilter.children;
   });
 })();
 
-export function enableEditMode() {
+function enableEditMode() {
   const editMode = document.getElementById("js-modal");
   const logout = document.getElementById("login");
   const login = document.getElementById("logout");
@@ -80,3 +80,6 @@ export function enableEditMode() {
   editBand.classList.remove("hidden");
 }
 enableEditMode();
+
+sessionStorage.getItem("token");
+console.log(sessionStorage);
