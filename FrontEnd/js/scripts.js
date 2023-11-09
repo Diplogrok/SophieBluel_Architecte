@@ -69,17 +69,23 @@ const buttonFilterChildren = buttonFilter.children;
   });
 })();
 
+const editMode = document.getElementById("js-modal");
+const login = document.getElementById("login");
+const logout = document.getElementById("logout");
+const editBand = document.getElementById("edit-band");
+
 function enableEditMode() {
-  const editMode = document.getElementById("js-modal");
-  const logout = document.getElementById("login");
-  const login = document.getElementById("logout");
-  const editBand = document.getElementById("edit-band");
-  logout.classList.add("hidden");
-  login.classList.remove("hidden");
+  login.classList.add("hidden");
+  logout.classList.remove("hidden");
   editMode.classList.remove("hidden");
   editBand.classList.remove("hidden");
 }
-enableEditMode();
+if (sessionStorage.getItem("token")) {
+  enableEditMode();
+}
 
-sessionStorage.getItem("token");
-console.log(sessionStorage);
+logout.addEventListener("click", function () {
+  sessionStorage.removeItem("token");
+  window.location.href = "index.html";
+  delete enableEditMode();
+});

@@ -20,8 +20,8 @@ function getWork(work) {
   for (let i = 0; i < work.length; i++) {
     container.innerHTML += `
         <figure class ="modal-figure">
-        <img id="${work[i].id}"src="${work[i].imageUrl}" width="78px">
-        <i id="${work[i].id}" class="fa-solid fa-trash-can"></i>
+        <img id="${work[i].id} id"src="${work[i].imageUrl}" width="78px">
+        <i id="${work[i].id} id" class="fa-solid fa-trash-can"></i>
         </figure>`;
   }
 }
@@ -32,8 +32,9 @@ const trash = document.querySelectorAll(".fa-trash-can");
 for (let i = 0; i < trash.length; i++) {
   trash[i].addEventListener("click", function () {
     console.log("click");
-    fetch("http://localhost:5678/api/works/${id}", {
+    fetch(`http://localhost:5678/api/works/${work[i].id}`, {
       method: "DELETE",
+      headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
     }).then((resp) => resp.json());
   });
 }
