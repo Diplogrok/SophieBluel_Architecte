@@ -335,6 +335,7 @@ li.mentions {
   display: flex;
   align-items: center;
   margin-left: 470px;
+  margin-bottom: 70px;
 }
 .js-modal {
   margin-bottom: 30px;
@@ -387,6 +388,7 @@ li.mentions {
   justify-content: flex-end;
   padding-bottom: 10px;
 }
+
 .line-decoration {
   width: 420px;
   border: 1px solid #1d6154;

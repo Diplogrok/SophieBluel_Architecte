@@ -73,12 +73,16 @@ const editMode = document.getElementById("js-modal");
 const login = document.getElementById("login");
 const logout = document.getElementById("logout");
 const editBand = document.getElementById("edit-band");
+const portfolioTitle = document.getElementById("portfolio-title");
 
 function enableEditMode() {
   login.classList.add("hidden");
   logout.classList.remove("hidden");
   editMode.classList.remove("hidden");
   editBand.classList.remove("hidden");
+  buttonFilter.classList.remove("filter");
+  buttonFilter.classList.add("hidden");
+  portfolioTitle.classList.add("portfolio-title");
 }
 if (sessionStorage.getItem("token")) {
   enableEditMode();
