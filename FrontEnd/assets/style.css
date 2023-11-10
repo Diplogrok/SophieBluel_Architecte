@@ -466,3 +466,54 @@ li.mentions {
     transform: translateX(-1%);
   }
 }
+
+.img-container {
+  width: 420px;
+  border-radius: 3px;
+  background-color: #e8f1f6;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  overflow: hidden;
+}
+.img-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.img-area img {
+  width: 129px;
+  height: 175px;
+  position: absolute;
+  z-index: 100;
+}
+
+.fa-image {
+  font-size: 76px;
+  color: #cbd6dc;
+  padding-top: 13px;
+  padding-bottom: 6px;
+}
+.img-selected {
+  border: none;
+  background-color: #cbd6dc;
+  color: #306685;
+  padding: 10px 33px;
+  font-size: 14px;
+  margin: 7px;
+}
+.background {
+  border: none;
+  background-color: #e8f1f6;
+  color: #306685;
+  padding: 10px 33px;
+  font-size: 14px;
+  margin: 7px;
+}
+
+.img-subtitle {
+  font-size: 10px;
+  color: #444;
+  padding-bottom: 19px;
+}
