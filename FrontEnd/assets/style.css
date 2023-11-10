@@ -126,7 +126,6 @@ q:after {
 a:link,
 a:visited,
 a:active {
-  color: black;
   text-decoration: none;
 }
 table {
@@ -192,8 +191,11 @@ img.social {
   width: 22px;
 }
 li:hover,
-a:hover {
+.link:hover {
   color: #b1663c;
+}
+.link {
+  color: black;
 }
 
 .hidden {
@@ -408,13 +410,14 @@ li.mentions {
   margin-left: 105px;
 }
 .input-modal {
-  border: none;
-  font-size: 14px;
-  color: white;
+  display: flex;
+  justify-content: center;
+  align-self: center;
   padding: 10px 49px;
-  width: 237px;
-  margin-left: 196px;
+  font-size: 14px;
   background-color: #1d6154;
+  border-radius: 60px;
+  color: white;
 }
 .input-modal-disabled {
   border: none;
