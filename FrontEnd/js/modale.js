@@ -69,6 +69,50 @@ window.addEventListener("keydown", function (e) {
   }
 });
 
+let modalBis = null;
+
+const openModalBis = function (e) {
+  e.preventDefault();
+  modalBis = document.querySelector(e.target.getAttribute("href"));
+
+  modalBis.style.display = null;
+  modalBis.removeAttribute("aria-hidden");
+  modalBis.setAttribute("aria-modal", true);
+  modalBis.addEventListener("click", closeModalBis);
+  modalBis
+    .querySelector(".js-modalBis-close")
+    .addEventListener("click", closeModalBis);
+  modalBis
+    .querySelector(".js-modalBis-stop")
+    .addEventListener("click", stopPropagation);
+};
+
+const closeModalBis = function (e) {
+  if (modalBis === null) return;
+  e.preventDefault();
+  modalBis.style.display = "none";
+  modalBis.setAttribute("aria-hidden", true);
+  modalBis.removeAttribute("aria-modal");
+  modalBis.removeEventListener("click", closeModalBis);
+  modalBis
+    .querySelector(".js-modalBis-close")
+    .removeEventListener("click", closeModalBis);
+  modalBis
+    .querySelector(".js-modalBis-stop")
+    .addEventListener("click", stopPropagation);
+  modalBis = null;
+};
+
+document.querySelectorAll(".js-modalBis").forEach((a) => {
+  a.addEventListener("click", openModalBis);
+});
+
+window.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" || e.key === "Esc") {
+    closeModalBis(e);
+  }
+});
+
 const selectImage = document.querySelector(".img-selected");
 const inputFile = document.querySelector("#file");
 const imgArea = document.querySelector(".img-area");
