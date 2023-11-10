@@ -381,12 +381,23 @@ li.mentions {
   font-size: 24px;
   color: black;
 }
-.js-modal-close {
+.fa-arrow-left {
+  font-size: 21px;
+  color: black;
+}
+.js-modal-close,
+.js-modal-return {
   border: none;
   background-color: white;
   display: flex;
   justify-content: flex-end;
   padding-bottom: 10px;
+}
+
+.js-modal-icos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .line-decoration {
@@ -397,12 +408,22 @@ li.mentions {
   margin-left: 105px;
 }
 .input-modal {
+  border: none;
   font-size: 14px;
   color: white;
   padding: 10px 49px;
   width: 237px;
   margin-left: 196px;
   background-color: #1d6154;
+}
+.input-modal-disabled {
+  border: none;
+  font-size: 14px;
+  color: white;
+  padding: 10px 49px;
+  width: 237px;
+  margin-left: 196px;
+  background-color: #a7a7a7;
 }
 
 .modal-gallery {

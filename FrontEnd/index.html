@@ -34,8 +34,24 @@
 	</aside>
 
 
+	<aside id="modalBis" class="modal" aria-hidden="true" role="dialog" aria-labelledby="title-modal">
+		<div class="modal-wrapper">
+			<div class="js-modal-icos">
+				<button class="js-modal-return"><i class="fa-solid fa-arrow-left"></i></button>
+				<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
+			</div>
+			<h3 id="title-modal">Ajout photo</h3>
+			<div class="line-decoration"></div>
+			<button class="input-modal-disabled" type="submit" disabled>Valider</button>
+		</div>
+
+	</aside>
+
+
 	<div id="edit-band" class="edit-band hidden"><i class="fa-regular fa-pen-to-square"></i>Mode édition</a></div>
 	<header>
+
+		<a href="#modalBis">ici</a>
 
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
@@ -43,7 +59,7 @@
 				<li><a href="#portfolio">projets</a></li>
 				<li><a href="#contact">contact</a></li>
 				<li id="login" class="loginout"><a href="login.html">login</a></li>
-				<li id="logout" class="hidden loginout"><a href="">logout</a></li>
+				<li id="logout" class="hidden loginout">logout</li>
 				<li><img class="social" src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
