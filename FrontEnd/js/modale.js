@@ -1,3 +1,5 @@
+import { updatePageContent } from "./scripts.js";
+
 let modal = null;
 
 const openModal = function (e) {
@@ -36,13 +38,17 @@ for (let i = 0; i < trash.length; i++) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
-    }).then((resp) => {
-      if (resp.ok) {
-        container.removeChild(trash[i].parentNode);
-      } else {
-        console.error("erreur".error);
-      }
-    });
+    })
+      .then((resp) => {
+        if (resp.ok) {
+          container.removeChild(trash[i].parentNode);
+        } else {
+          console.error("Erreur lors de la suppression de l'élément");
+        }
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la suppression de l'élément", error);
+      });
   });
 }
 
@@ -60,6 +66,7 @@ const closeModal = function (e) {
     .querySelector(".js-modal-stop")
     .removeEventListener("click", stopPropagation);
   modal = null;
+  updatePageContent();
 };
 
 const stopPropagation = function (e) {
@@ -107,6 +114,7 @@ const closeModalBis = function (e) {
     .querySelector(".js-modalBis-stop")
     .addEventListener("click", stopPropagation);
   modalBis = null;
+  updatePageContent();
 };
 
 document.querySelectorAll(".js-modalBis").forEach((a) => {

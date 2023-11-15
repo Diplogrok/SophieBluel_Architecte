@@ -5,7 +5,6 @@ const buttonFilterChildren = buttonFilter.children;
  * Récupération des travaux du back-end
  */
 (async () => {
-  
   const answerW = await fetch("http://localhost:5678/api/works");
   const work = await answerW.json();
 
@@ -95,3 +94,22 @@ logout.addEventListener("click", function () {
   window.location.href = "index.html";
   delete enableEditMode();
 });
+
+export async function updatePageContent() {
+  const container = document.getElementById("gallery");
+  // Réinitialise le contenu de la galerie
+  container.innerHTML = "";
+
+  // Récupère à nouveau les travaux depuis le backend
+  const updatedAnswerW = await fetch("http://localhost:5678/api/works");
+  const updatedWork = await updatedAnswerW.json();
+
+  // Affiche les travaux mis à jour
+  for (let i = 0; i < updatedWork.length; i++) {
+    container.innerHTML += `
+      <figure>
+        <img src="${updatedWork[i].imageUrl}">
+        <figcaption>${updatedWork[i].title}</figcaption>
+      </figure>`;
+  }
+}
