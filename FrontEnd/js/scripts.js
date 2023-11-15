@@ -5,8 +5,10 @@ const buttonFilterChildren = buttonFilter.children;
  * Récupération des travaux du back-end
  */
 (async () => {
+  
   const answerW = await fetch("http://localhost:5678/api/works");
   const work = await answerW.json();
+
   /**
    * Intégration des données (data) "works"
    * @param {getWork} function Permet de faire apparaître dynamiquement les travaux du back-end

@@ -128,6 +128,7 @@ a:visited,
 a:active {
   text-decoration: none;
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -197,7 +198,12 @@ li:hover,
 .link {
   color: black;
 }
-
+#login :visited {
+  color: black;
+}
+#login :hover {
+  color: #b1663c;
+}
 .hidden {
   display: none;
 }
@@ -433,7 +439,7 @@ li.mentions {
   display: flex;
   flex-wrap: wrap;
   margin-left: 106px;
-  margin-right: 106px;
+  margin-right: 10px;
 }
 .modal-figure {
   padding: 9.5px 3px;
@@ -449,6 +455,7 @@ li.mentions {
   border-radius: 2px;
   padding: 2px;
   background-color: black;
+  z-index: 100;
 }
 
 #error {
@@ -533,13 +540,23 @@ li.mentions {
   padding-top: 21px;
 }
 
-#title,
-#categorie {
+#title {
   border: none;
   box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 }
 #categorie {
   padding: 16px;
+}
+.menu select {
+  width: 420px;
+  color: transparent;
+  background: transparent;
+  border: transparent;
+}
+.menu {
+  width: 420px;
+  height: 49px;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 }
 .informations {
   padding: 17px;

@@ -16,32 +16,39 @@ const openModal = function (e) {
 const container = document.querySelector(".modal-gallery");
 const answerW = await fetch("http://localhost:5678/api/works");
 const work = await answerW.json();
-function getWork(work) {
+function getWork() {
   for (let i = 0; i < work.length; i++) {
     container.innerHTML += `
         <figure class ="modal-figure">
-        <img id="${work[i].id} id"src="${work[i].imageUrl}" width="78px">
-        <i id="${work[i].id} id" class="fa-solid fa-trash-can"></i>
+        <img id="${work[i].id}"src="${work[i].imageUrl}" width="78px">
+        <i id="${work[i].id}" class="fa-solid fa-trash-can"></i>
         </figure>`;
   }
 }
-getWork(work);
+getWork();
 
 const trash = document.querySelectorAll(".fa-trash-can");
-
 for (let i = 0; i < trash.length; i++) {
   trash[i].addEventListener("click", function () {
-    console.log("click");
     fetch(`http://localhost:5678/api/works/${work[i].id}`, {
       method: "DELETE",
-      headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
-    }).then((resp) => resp.json());
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        container.removeChild(trash[i].parentNode);
+      } else {
+        console.error("erreur".error);
+      }
+    });
   });
 }
 
 const closeModal = function (e) {
-  if (modal === null) return;
   e.preventDefault();
+  if (modal === null) return;
   modal.style.display = "none";
   modal.setAttribute("aria-hidden", true);
   modal.removeAttribute("aria-modal");
@@ -74,7 +81,6 @@ let modalBis = null;
 const openModalBis = function (e) {
   e.preventDefault();
   modalBis = document.querySelector(e.target.getAttribute("href"));
-
   modalBis.style.display = null;
   modalBis.removeAttribute("aria-hidden");
   modalBis.setAttribute("aria-modal", true);
@@ -123,7 +129,6 @@ selectImage.addEventListener("click", function () {
 
 inputFile.addEventListener("change", function () {
   const image = this.files[0];
-  console.log(image);
   const reader = new FileReader();
   reader.onload = () => {
     const imgUrl = reader.result;
