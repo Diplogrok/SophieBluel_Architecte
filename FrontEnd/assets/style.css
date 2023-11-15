@@ -380,7 +380,8 @@ li.mentions {
   background-color: white;
   border-radius: 10px;
 }
-#title-modal {
+#title-modal,
+#title-modalBis {
   font-size: 26px;
   text-align: center;
   padding-bottom: 46px;
@@ -542,22 +543,23 @@ li.mentions {
 
 #title {
   border: none;
+  color: #444;
+  font-family: Work Sans;
   box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 }
 #categorie {
   padding: 16px;
 }
 .menu select {
-  width: 420px;
-  color: transparent;
-  background: transparent;
-  border: transparent;
-}
-.menu {
+  color: #444;
+  font-family: Work Sans;
   width: 420px;
   height: 49px;
+  background: transparent;
+  border: transparent;
   box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 }
+
 .informations {
   padding: 17px;
 }

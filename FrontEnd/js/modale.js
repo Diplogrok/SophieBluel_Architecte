@@ -2,13 +2,20 @@ import { updatePageContent } from "./scripts.js";
 
 let modal = null;
 
+// Fonction pour ouvrir la fenêtre modale
 const openModal = function (e) {
-  e.preventDefault();
-  modal = document.querySelector(e.target.getAttribute("href"));
+  // Vérifier si e et e.preventDefault sont définis
+  if (e && e.preventDefault) {
+    // Annuler l'événement par défaut si défini
+    e.preventDefault();
+  }
 
+  modal = document.querySelector(e.target.getAttribute("href"));
+  // Afficher la modal
   modal.style.display = null;
   modal.removeAttribute("aria-hidden");
   modal.setAttribute("aria-modal", true);
+  // Ajouter des écouteurs d'événements pour fermer la modal
   modal.addEventListener("click", closeModal);
   modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
   modal
@@ -16,8 +23,11 @@ const openModal = function (e) {
     .addEventListener("click", stopPropagation);
 };
 const container = document.querySelector(".modal-gallery");
+
+// Récupérer les œuvres depuis l'API
 const answerW = await fetch("http://localhost:5678/api/works");
 const work = await answerW.json();
+// Fonction pour afficher les œuvres dans la galerie modale
 function getWork() {
   for (let i = 0; i < work.length; i++) {
     container.innerHTML += `
@@ -30,6 +40,7 @@ function getWork() {
 getWork();
 
 const trash = document.querySelectorAll(".fa-trash-can");
+// Ajouter des écouteurs d'événements pour la suppression d'une œuvre
 for (let i = 0; i < trash.length; i++) {
   trash[i].addEventListener("click", function () {
     fetch(`http://localhost:5678/api/works/${work[i].id}`, {
@@ -52,6 +63,7 @@ for (let i = 0; i < trash.length; i++) {
   });
 }
 
+// Fonction pour fermer la modal
 const closeModal = function (e) {
   e.preventDefault();
   if (modal === null) return;
@@ -66,23 +78,26 @@ const closeModal = function (e) {
     .querySelector(".js-modal-stop")
     .removeEventListener("click", stopPropagation);
   modal = null;
-  updatePageContent();
+  updatePageContent(); // Mettre à jour le contenu de la page
 };
 
+// Fonction pour arrêter la propagation de l'événement
 const stopPropagation = function (e) {
   e.stopPropagation();
 };
-
+// Ajouter des écouteurs d'événements pour ouvrir la modal au clic sur les boutons
 document.querySelectorAll(".js-modal").forEach((a) => {
   a.addEventListener("click", openModal);
 });
 
+// Ajouter un écouteur d'événements pour fermer la modal en appuyant sur la touche Escape
 window.addEventListener("keydown", function (e) {
   if (e.key === "Escape" || e.key === "Esc") {
     closeModal(e);
   }
 });
 
+// Deuxième boite modal
 let modalBis = null;
 
 const openModalBis = function (e) {
@@ -98,11 +113,15 @@ const openModalBis = function (e) {
   modalBis
     .querySelector(".js-modalBis-stop")
     .addEventListener("click", stopPropagation);
+
+  // Ajoutez un nouvel événement pour le bouton de retour
+  modalBis
+    .querySelector(".js-modal-return")
+    .addEventListener("click", closeModalBis);
 };
 
-const closeModalBis = function (e) {
+const closeModalBis = function () {
   if (modalBis === null) return;
-  e.preventDefault();
   modalBis.style.display = "none";
   modalBis.setAttribute("aria-hidden", true);
   modalBis.removeAttribute("aria-modal");
@@ -112,7 +131,10 @@ const closeModalBis = function (e) {
     .removeEventListener("click", closeModalBis);
   modalBis
     .querySelector(".js-modalBis-stop")
-    .addEventListener("click", stopPropagation);
+    .removeEventListener("click", stopPropagation);
+  modalBis
+    .querySelector(".js-modal-return")
+    .removeEventListener("click", closeModalBis);
   modalBis = null;
   updatePageContent();
 };
@@ -127,17 +149,31 @@ window.addEventListener("keydown", function (e) {
   }
 });
 
+document.querySelectorAll(".js-modal-return").forEach((returnButton) => {
+  // Ajouter un écouteur d'événements pour le clic sur chaque bouton de retour
+  returnButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    closeModalBis();
+    // Ouvrir la modal originale (modal) en utilisant la fonction openModal
+    // avec l'attribut href équivalent à "#modal"
+    openModal({ target: { getAttribute: () => "#modal" } });
+  });
+});
+
 const selectImage = document.querySelector(".img-selected");
 const inputFile = document.querySelector("#file");
 const imgArea = document.querySelector(".img-area");
-
+// Ajouter un écouteur d'événements pour le clic sur "Ajouter photo"
 selectImage.addEventListener("click", function () {
-  inputFile.click();
+  inputFile.click(); // Clic sur le champ de fichier invisible
 });
 
+// Ajouter un écouteur d'événements pour le changement du fichier sélectionné
 inputFile.addEventListener("change", function () {
-  const image = this.files[0];
+  const image = this.files[0]; // Récupérer le fichier image sélectionné
   const reader = new FileReader();
+
+  // Fonction à exécuter lorsque le chargement de l'image est terminé
   reader.onload = () => {
     const imgUrl = reader.result;
     const img = document.createElement("img");
@@ -146,5 +182,18 @@ inputFile.addEventListener("change", function () {
     selectImage.classList.add("background");
     selectImage.classList.remove("img-selected");
   };
+  // Lire le contenu de l'image en tant que URL de données
   reader.readAsDataURL(image);
 });
+
+const selectCategory = document.getElementById("categorie");
+// Récupérer les catégories depuis l'API
+const answerC = await fetch("http://localhost:5678/api/categories");
+const category = await answerC.json();
+// Ajouter les catégories à la liste déroulante
+for (let j = 0; j < category.length; j++) {
+  selectCategory.innerHTML += `
+  <option value ="${category[j].id} ">${category[j].name}
+  </option>
+      `;
+}

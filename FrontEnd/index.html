@@ -22,8 +22,7 @@
 <body>
 	<!---->
 
-	<aside id="modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="title-modal"
-		style="display: none;">
+	<aside id="modal" class="modal" aria-hidden="true" aria-labelledby="title-modal" style="display: none;">
 		<div class="modal-wrapper js-modal-stop">
 			<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
 			<h3 id="title-modal">Galerie photo</h3>
@@ -35,14 +34,13 @@
 	</aside>
 
 
-	<aside id="modalBis" class="modal" aria-hidden="true" role="dialog" aria-labelledby="title-modal"
-		style="display: none;">
+	<aside id="modalBis" class="modal" aria-hidden="true" aria-labelledby="title-modalBis" style="display: none;">
 		<div class="modal-wrapper js-modalBis-stop">
 			<div class="js-modal-icos">
 				<button class="js-modal-return"><i class="fa-solid fa-arrow-left"></i></button>
 				<button class="js-modalBis-close js-modal-close"><i class="fa-solid fa-xmark"></i></button>
 			</div>
-			<h3 id="title-modal">Ajout photo</h3>
+			<h3 id="title-modalBis">Ajout photo</h3>
 
 			<div class="img-container">
 				<input type="file" id="file" accept="image/*" hidden>
@@ -58,7 +56,8 @@
 				<label for="categorie" class="title-modal-form">Catégorie</label>
 				<div class="menu">
 					<select name="categorie" id="categorie">
-						<option id="categorie" value="" class="informations"></option>
+						<option value="">- Selectionnez une catégorie -
+						</option>
 					</select>
 				</div>
 			</form>
@@ -70,7 +69,7 @@
 	</aside>
 
 
-	<div id="edit-band" class="edit-band hidden"><i class="fa-regular fa-pen-to-square"></i>Mode édition</a></div>
+	<div id="edit-band" class="edit-band hidden"><i class="fa-regular fa-pen-to-square"></i>Mode édition</div>
 	<header>
 
 
