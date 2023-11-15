@@ -15,7 +15,8 @@ function errorMessage(message) {
 }
 
 const form = document.getElementById("form");
-// Ajouter un écouteur d'événements pour le soumission du formulair
+
+// Ajouter un écouteur d'événements pour le soumission du formulaire
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   // Créer un objet FormData à partir des données du formulaire

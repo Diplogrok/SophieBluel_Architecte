@@ -1,5 +1,19 @@
 import { updatePageContent } from "./scripts.js";
 
+function displayErrorMessage(message) {
+  let spanErrorMessage = document.getElementById("error");
+
+  if (!spanErrorMessage) {
+    // Si non, créer un nouvel élément "span" et lui attribuer l'ID "error"
+    // Puis l'ajouter au formulaire avec la classe "popup"
+    let form = document.querySelector(".popup");
+    spanErrorMessage = document.createElement("span");
+    spanErrorMessage.id = "error";
+
+    form.append(spanErrorMessage);
+  }
+  spanErrorMessage.innerText = message;
+}
 let modal = null;
 
 // Fonction pour ouvrir la fenêtre modale
@@ -58,7 +72,9 @@ for (let i = 0; i < trash.length; i++) {
         }
       })
       .catch((error) => {
-        console.error("Erreur lors de la suppression de l'élément", error);
+        const errorMessage = `Erreur : ${error.message}`;
+        console.error(errorMessage);
+        displayErrorMessage(errorMessage);
       });
   });
 }
@@ -151,8 +167,8 @@ window.addEventListener("keydown", function (e) {
 
 document.querySelectorAll(".js-modal-return").forEach((returnButton) => {
   // Ajouter un écouteur d'événements pour le clic sur chaque bouton de retour
-  returnButton.addEventListener("click", function (event) {
-    event.preventDefault();
+  returnButton.addEventListener("click", function (e) {
+    e.preventDefault();
     closeModalBis();
     // Ouvrir la modal originale (modal) en utilisant la fonction openModal
     // avec l'attribut href équivalent à "#modal"
@@ -161,10 +177,13 @@ document.querySelectorAll(".js-modal-return").forEach((returnButton) => {
 });
 
 const selectImage = document.querySelector(".img-selected");
-const inputFile = document.querySelector("#file");
+const inputFile = document.querySelector("#image");
 const imgArea = document.querySelector(".img-area");
+const selectCategory = document.getElementById("category");
+const submitButton = document.getElementById("submitBtn");
 // Ajouter un écouteur d'événements pour le clic sur "Ajouter photo"
-selectImage.addEventListener("click", function () {
+selectImage.addEventListener("click", function (e) {
+  e.preventDefault();
   inputFile.click(); // Clic sur le champ de fichier invisible
 });
 
@@ -172,7 +191,6 @@ selectImage.addEventListener("click", function () {
 inputFile.addEventListener("change", function () {
   const image = this.files[0]; // Récupérer le fichier image sélectionné
   const reader = new FileReader();
-
   // Fonction à exécuter lorsque le chargement de l'image est terminé
   reader.onload = () => {
     const imgUrl = reader.result;
@@ -186,14 +204,68 @@ inputFile.addEventListener("change", function () {
   reader.readAsDataURL(image);
 });
 
-const selectCategory = document.getElementById("categorie");
 // Récupérer les catégories depuis l'API
-const answerC = await fetch("http://localhost:5678/api/categories");
-const category = await answerC.json();
-// Ajouter les catégories à la liste déroulante
-for (let j = 0; j < category.length; j++) {
-  selectCategory.innerHTML += `
-  <option value ="${category[j].id} ">${category[j].name}
-  </option>
-      `;
-}
+fetch("http://localhost:5678/api/categories")
+  .then((response) => response.json())
+  .then((categories) => {
+    // Ajouter les catégories à la liste déroulante
+    for (let j = 0; j < categories.length; j++) {
+      selectCategory.innerHTML += `
+      <option value ="${categories[j].id} ">${categories[j].name}
+      </option>`;
+    }
+  });
+
+// Ajouter un écouteur d'événements pour le soumission du formulaire
+submitButton.addEventListener("click", function () {
+  const form = document.getElementById("modal-form");
+  const formData = new FormData(form);
+  const image = formData.get("image");
+  const title = formData.get("title");
+  const category = formData.get("category");
+
+  // Vérification de l'image
+  if (!image || !image.type.startsWith("image/")) {
+    const errorMessage = "Erreur : Veuillez sélectionner une image valide.";
+    displayErrorMessage(errorMessage);
+    return;
+  }
+
+  // Vérification du titre
+  if (title.length < 5) {
+    const errorMessage =
+      "Erreur : Le titre doit comporter au moins 5 caractères.";
+    displayErrorMessage(errorMessage);
+    return;
+  }
+
+  // Vérification de la catégorie
+  if (!category) {
+    const errorMessage = "Erreur : Veuillez sélectionner une catégorie.";
+    displayErrorMessage(errorMessage);
+    return;
+  }
+
+  fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+    },
+    body: formData,
+  })
+    .then((resp) => {
+      if (!resp.ok) {
+        throw new Error(`Erreur lors de la requête : ${resp.status}`);
+      }
+      return resp.json();
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      const errorMessage = `Erreur : ${error.message}`;
+      console.error(errorMessage);
+      displayErrorMessage(errorMessage);
+    });
+});
