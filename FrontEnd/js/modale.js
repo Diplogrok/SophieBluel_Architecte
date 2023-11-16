@@ -17,31 +17,47 @@ function displayErrorMessage(message) {
 let modal = null;
 
 // Fonction pour ouvrir la fenêtre modale
-const openModal = function (e) {
-  // Vérifier si e et e.preventDefault sont définis
+const openModal = async function (e) {
+  // Vérifie si e et e.preventDefault sont définis
   if (e && e.preventDefault) {
-    // Annuler l'événement par défaut si défini
+    // Annule l'événement par défaut si défini
     e.preventDefault();
   }
 
   modal = document.querySelector(e.target.getAttribute("href"));
-  // Afficher la modal
+  // Affiche la modal
   modal.style.display = null;
   modal.removeAttribute("aria-hidden");
   modal.setAttribute("aria-modal", true);
-  // Ajouter des écouteurs d'événements pour fermer la modal
+  // Ajoute des écouteurs d'événements pour fermer la modal
   modal.addEventListener("click", closeModal);
   modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
   modal
     .querySelector(".js-modal-stop")
     .addEventListener("click", stopPropagation);
+
+  // Fetch les travaux mis à jour
+  const updatedWorksResponse = await fetch("http://localhost:5678/api/works");
+  const updatedWorks = await updatedWorksResponse.json();
+
+  container.innerHTML = "";
+
+  // Affiche les travaux mis à jour
+  for (let i = 0; i < updatedWorks.length; i++) {
+    container.innerHTML += `
+        <figure class ="modal-figure">
+        <img id="${updatedWorks[i].id}" src="${updatedWorks[i].imageUrl}" width="78px">
+        <i id="${updatedWorks[i].id}" class="fa-solid fa-trash-can"></i>
+        </figure>`;
+  }
 };
+
 const container = document.querySelector(".modal-gallery");
 
-// Récupérer les œuvres depuis l'API
+// Récupére les travaux depuis l'API
 const answerW = await fetch("http://localhost:5678/api/works");
 const work = await answerW.json();
-// Fonction pour afficher les œuvres dans la galerie modale
+// Fonction pour afficher les travaux dans la galerie modale
 function getWork() {
   for (let i = 0; i < work.length; i++) {
     container.innerHTML += `
@@ -51,13 +67,17 @@ function getWork() {
         </figure>`;
   }
 }
-getWork();
 
-const trash = document.querySelectorAll(".fa-trash-can");
-// Ajouter des écouteurs d'événements pour la suppression d'une œuvre
-for (let i = 0; i < trash.length; i++) {
-  trash[i].addEventListener("click", function () {
-    fetch(`http://localhost:5678/api/works/${work[i].id}`, {
+getWork();
+// Ajoute un écouteur d'événements au conteneur
+container.addEventListener("click", function (e) {
+  // Vérifie si l'élément cliqué a la classe "fa-trash-can"
+  if (e.target.classList.contains("fa-trash-can")) {
+    // Extrait l'icône de corbeille et l'ID du projet correspondant
+    const trashIcon = e.target;
+    const projectId = trashIcon.id;
+    // Requête DELETE à l'API pour supprimer le travail avec l'ID spécifié
+    fetch(`http://localhost:5678/api/works/${projectId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -66,18 +86,18 @@ for (let i = 0; i < trash.length; i++) {
     })
       .then((resp) => {
         if (resp.ok) {
-          container.removeChild(trash[i].parentNode);
+          // Supprime l'élément de travail correspondant du conteneur
+          container.removeChild(trashIcon.parentNode);
         } else {
-          console.error("Erreur lors de la suppression de l'élément");
+          console.error("Error deleting project:", resp.status);
         }
       })
       .catch((error) => {
-        const errorMessage = `Erreur : ${error.message}`;
-        console.error(errorMessage);
-        displayErrorMessage(errorMessage);
+        console.error("Error deleting project:", error.message);
+        displayErrorMessage(`Erreur : ${error.message}`);
       });
-  });
-}
+  }
+});
 
 // Fonction pour fermer la modal
 const closeModal = function (e) {
@@ -101,12 +121,12 @@ const closeModal = function (e) {
 const stopPropagation = function (e) {
   e.stopPropagation();
 };
-// Ajouter des écouteurs d'événements pour ouvrir la modal au clic sur les boutons
+// Ajoute des écouteurs d'événements pour ouvrir la modal au clic sur les boutons
 document.querySelectorAll(".js-modal").forEach((a) => {
   a.addEventListener("click", openModal);
 });
 
-// Ajouter un écouteur d'événements pour fermer la modal en appuyant sur la touche Escape
+// Ajoute un écouteur d'événements pour fermer la modal en appuyant sur la touche Escape
 window.addEventListener("keydown", function (e) {
   if (e.key === "Escape" || e.key === "Esc") {
     closeModal(e);
@@ -130,7 +150,7 @@ const openModalBis = function (e) {
     .querySelector(".js-modalBis-stop")
     .addEventListener("click", stopPropagation);
 
-  // Ajoutez un nouvel événement pour le bouton de retour
+  // Ajoute un nouvel événement pour le bouton de retour
   modalBis
     .querySelector(".js-modal-return")
     .addEventListener("click", closeModalBis);
@@ -166,7 +186,7 @@ window.addEventListener("keydown", function (e) {
 });
 
 document.querySelectorAll(".js-modal-return").forEach((returnButton) => {
-  // Ajouter un écouteur d'événements pour le clic sur chaque bouton de retour
+  // Ajoute un écouteur d'événements pour le clic sur chaque bouton de retour
   returnButton.addEventListener("click", function (e) {
     e.preventDefault();
     closeModalBis();
@@ -181,16 +201,16 @@ const inputFile = document.querySelector("#image");
 const imgArea = document.querySelector(".img-area");
 const selectCategory = document.getElementById("category");
 const submitButton = document.getElementById("submitBtn");
-// Ajouter un écouteur d'événements pour le clic sur "Ajouter photo"
+// Ajoute un écouteur d'événements pour le clic sur "Ajouter photo"
 selectImage.addEventListener("click", function (e) {
   e.preventDefault();
-  inputFile.click(); // Clic sur le champ de fichier invisible
+  inputFile.click();
 });
 
 let image = null;
-// Ajouter un écouteur d'événements pour le changement du fichier sélectionné
+// Ajoute un écouteur d'événements pour le changement du fichier sélectionné
 inputFile.addEventListener("change", function () {
-  image = this.files[0]; // Récupérer le fichier image sélectionné
+  image = this.files[0]; // Récupére le fichier image sélectionné
   updateSubmitButton();
 
   if (image) {
@@ -208,7 +228,7 @@ inputFile.addEventListener("change", function () {
     reader.readAsDataURL(image);
   }
 });
-
+// Fonction changement automatique de la classe du submitButton
 function updateSubmitButton() {
   const title = document.getElementById("title").value;
   const category = selectCategory.value;
@@ -227,7 +247,7 @@ function updateSubmitButton() {
   }
 }
 
-// Ajouter des gestionnaires d'événements pour les changements dans le titre et la catégorie
+// Ajoute des gestionnaires d'événements pour les changements dans le titre et la catégorie
 document.getElementById("title").addEventListener("input", function () {
   updateSubmitButton();
 });
@@ -236,11 +256,11 @@ selectCategory.addEventListener("change", function () {
   updateSubmitButton();
 });
 
-// Récupérer les catégories depuis l'API
+// Récupère les catégories depuis l'API
 fetch("http://localhost:5678/api/categories")
   .then((response) => response.json())
   .then((categories) => {
-    // Ajouter les catégories à la liste déroulante
+    // Ajoute les catégories à la liste déroulante
     for (let j = 0; j < categories.length; j++) {
       selectCategory.innerHTML += `
       <option value ="${categories[j].id} ">${categories[j].name}
@@ -248,7 +268,7 @@ fetch("http://localhost:5678/api/categories")
     }
   });
 
-// Ajouter un écouteur d'événements pour le soumission du formulaire
+// Ajoute un écouteur d'événements pour le soumission du formulaire
 submitButton.addEventListener("click", function () {
   const form = document.getElementById("modal-form");
   const formData = new FormData(form);
@@ -277,7 +297,7 @@ submitButton.addEventListener("click", function () {
     displayErrorMessage(errorMessage);
     return;
   }
-
+  // Envoie une requête POST à l'API pour ajouter un nouveau travail
   fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: {
@@ -287,13 +307,16 @@ submitButton.addEventListener("click", function () {
     body: formData,
   })
     .then((resp) => {
-      if (!resp.ok) {
-        throw new Error(`Erreur lors de la requête : ${resp.status}`);
+      if (resp.ok) {
       }
       return resp.json();
     })
     .then((data) => {
-      console.log(data);
+      // Ferme la modal actuelle (modalBis)
+      closeModalBis();
+
+      // Ouvre la modal gallery (modal) pour afficher le nouveau projet
+      openModal({ target: { getAttribute: () => "#modal" } });
     })
     .catch((error) => {
       const errorMessage = `Erreur : ${error.message}`;

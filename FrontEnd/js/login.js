@@ -16,14 +16,14 @@ function errorMessage(message) {
 
 const form = document.getElementById("form");
 
-// Ajouter un écouteur d'événements pour le soumission du formulaire
+// Ajoute un écouteur d'événements pour le soumission du formulaire
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  // Créer un objet FormData à partir des données du formulaire
+  // Crée un objet FormData à partir des données du formulaire
   const formData = new FormData(form);
-  // Convertir l'objet FormData en un objet JavaScript avec Object.fromEntries
+  // Converti l'objet FormData en un objet JavaScript
   const dataForm = Object.fromEntries(formData);
-  // Effectuer une requête POST vers l'API pour la connexion de l'utilisateur
+  // Requête POST vers l'API pour la connexion de l'utilisateur
   fetch("http://localhost:5678/api/users/login", {
     method: "POST",
     headers: {
@@ -35,10 +35,10 @@ form.addEventListener("submit", (e) => {
       return resp.json();
     })
     .then((data) => {
-      // Stocker le token dans sessionStorage
+      // Stock le token dans sessionStorage
       sessionStorage.setItem("token", data.token);
       const token = data.token;
-      // Rediriger vers "index.html" si le token est présent
+      // Redirige vers "index.html" si le token est présent
       if (token) {
         window.location.href = "index.html";
       } else {
