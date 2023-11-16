@@ -426,6 +426,15 @@ li.mentions {
   border-radius: 60px;
   color: white;
 }
+.input-modal-enabled {
+  border: none;
+  font-size: 14px;
+  color: white;
+  padding: 10px 49px;
+  width: 237px;
+  background-color: #1d6154;
+  align-self: center;
+}
 .input-modal-disabled {
   border: none;
   font-size: 14px;

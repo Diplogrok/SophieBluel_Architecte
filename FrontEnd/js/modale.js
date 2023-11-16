@@ -187,21 +187,53 @@ selectImage.addEventListener("click", function (e) {
   inputFile.click(); // Clic sur le champ de fichier invisible
 });
 
+let image = null;
 // Ajouter un écouteur d'événements pour le changement du fichier sélectionné
 inputFile.addEventListener("change", function () {
-  const image = this.files[0]; // Récupérer le fichier image sélectionné
-  const reader = new FileReader();
-  // Fonction à exécuter lorsque le chargement de l'image est terminé
-  reader.onload = () => {
-    const imgUrl = reader.result;
-    const img = document.createElement("img");
-    img.src = imgUrl;
-    imgArea.appendChild(img);
-    selectImage.classList.add("background");
-    selectImage.classList.remove("img-selected");
-  };
-  // Lire le contenu de l'image en tant que URL de données
-  reader.readAsDataURL(image);
+  image = this.files[0]; // Récupérer le fichier image sélectionné
+  updateSubmitButton();
+
+  if (image) {
+    const reader = new FileReader();
+    // Fonction à exécuter lorsque le chargement de l'image est terminé
+    reader.onload = () => {
+      const imgUrl = reader.result;
+      const img = document.createElement("img");
+      img.src = imgUrl;
+      imgArea.appendChild(img);
+      selectImage.classList.add("background");
+      selectImage.classList.remove("img-selected");
+    };
+    // Lire le contenu de l'image en tant que URL de données
+    reader.readAsDataURL(image);
+  }
+});
+
+function updateSubmitButton() {
+  const title = document.getElementById("title").value;
+  const category = selectCategory.value;
+
+  // Vérification de l'image, du titre et de la catégorie
+  const conditions =
+    image && image.type.startsWith("image/") && title.length >= 5 && category;
+
+  // Mettre à jour la classe du bouton en fonction des conditions
+  if (conditions) {
+    submitButton.classList.add("input-modal-enabled");
+    submitButton.classList.remove("input-modal-disabled");
+  } else {
+    submitButton.classList.remove("input-modal-enabled");
+    submitButton.classList.add("input-modal-disabled");
+  }
+}
+
+// Ajouter des gestionnaires d'événements pour les changements dans le titre et la catégorie
+document.getElementById("title").addEventListener("input", function () {
+  updateSubmitButton();
+});
+
+selectCategory.addEventListener("change", function () {
+  updateSubmitButton();
 });
 
 // Récupérer les catégories depuis l'API
